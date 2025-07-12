@@ -1,14 +1,10 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {API_JWT} from "../vars/api";
-import AxiosXHR = Axios.AxiosXHR;
 import {Dispatch, SetStateAction} from "react";
-import {getUser} from "../providers/user/get.user";
-import {setUserConnected} from "../redux/reducers/user/user.setters";
-import {IUserEntity} from "../structures/entities/IUser.entity";
 
 export const fetchToken = async (setUid: Dispatch<SetStateAction<string | null>>) => {
     try {
-        const response: AxiosXHR<string> = await axios({
+        const response: AxiosResponse<string> = await axios({
             method: 'GET',
             url: API_JWT,
             withCredentials: true,

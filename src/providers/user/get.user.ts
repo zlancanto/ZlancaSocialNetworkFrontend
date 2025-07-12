@@ -1,11 +1,10 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {API_USER_BY_ID} from "../../vars/api";
-import AxiosXHR = Axios.AxiosXHR;
 import {IUserEntity} from "../../structures/entities/IUser.entity";
 
 export const getUser = async (uid: string) => {
     try {
-        const res: AxiosXHR<IUserEntity> = await axios({
+        const res: AxiosResponse<IUserEntity> = await axios({
             method: 'GET',
             url: `${API_USER_BY_ID}/${uid}`,
             withCredentials: true

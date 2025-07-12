@@ -8,7 +8,7 @@ export const formatLikeDayMonthYearHour = (dateParam: string | Date): string => 
         ? dateParam
         : new Date(dateParam);
 
-    if (isNaN(date.getTime())) { throw Error("Invalid date format")};
+    //if (isNaN(date.getTime())) { throw Error("Invalid date format")}
 
     // Options
     const options: Intl.DateTimeFormatOptions = {

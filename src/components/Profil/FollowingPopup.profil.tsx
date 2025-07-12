@@ -2,6 +2,7 @@ import React, {FunctionComponent} from 'react';
 import {IUserEntity} from "../../structures/entities/IUser.entity";
 import {useSelector} from "react-redux";
 import {getUserConnected, getUserList} from "../../redux/reducers/user/user.getters";
+import FollowHandler from "./FollowHandler";
 
 interface Props {
     setFollowingPopup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,11 +27,13 @@ const FollowingPopupProfil: FunctionComponent<Props> = ({setFollowingPopup}) => 
                         userConnected.following.map((followingId: string) =>
                             userList.filter((user: IUserEntity) =>
                                 followingId === user._id).map((folling: IUserEntity) => (
-                                    <li key={folling._id}>
-                                        <img src={folling.picture} alt="FollowingPicture"/>
-                                        <h4>{folling.pseudo}</h4>
-                                        <h1>Follow Handler</h1>
-                                    </li>
+                                <li key={folling._id}>
+                                    <img src={folling.picture} alt="FollowingPicture"/>
+                                    <h4>{folling.pseudo}</h4>
+                                    <div className="follow-handler">
+                                        <FollowHandler idToFollow={folling._id}/>
+                                    </div>
+                                </li>
                             )))
                     }
                 </ul>

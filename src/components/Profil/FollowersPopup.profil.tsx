@@ -2,6 +2,7 @@ import React, {FunctionComponent} from 'react';
 import {useSelector} from "react-redux";
 import {getUserConnected, getUserList} from "../../redux/reducers/user/user.getters";
 import {IUserEntity} from "../../structures/entities/IUser.entity";
+import FollowHandler from "./FollowHandler";
 
 interface Props {
     setFollowersPopup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +30,9 @@ const FollowersPopupProfil: FunctionComponent<Props> = ({setFollowersPopup}) => 
                                 <li key={follower._id}>
                                     <img src={follower.picture} alt="FollowerPicture"/>
                                     <h4>{follower.pseudo}</h4>
-                                    <h1>Follow Handler</h1>
+                                    <div className="follow-handler">
+                                        <FollowHandler idToFollow={follower._id}/>
+                                    </div>
                                 </li>
                             )))
                     }
