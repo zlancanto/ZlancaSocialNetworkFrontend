@@ -83,7 +83,6 @@ const SignInForm: FunctionComponent = () => {
                 connectionError && (
                     <>
                         <div className="error">{connectionError}</div>
-
                     </>
                 )
             }

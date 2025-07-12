@@ -2,8 +2,8 @@ import React, {FunctionComponent, useState} from 'react';
 import {API_USER_REGISTER} from "../../vars/api";
 import {NavLink} from "react-router-dom";
 import axios from "axios";
-import {IRegister} from "../../structures/interfaces/IRegister";
-import {IPasswordError} from "../../structures/interfaces/IPasswordError";
+import {IRegister} from "../../structures/IRegister";
+import {IPasswordError} from "../../structures/IPasswordError";
 import SignInForm from "./SignInForm";
 
 const SignUpForm: FunctionComponent = () => {

@@ -1,0 +1,1 @@
+Ce dossier contient les schema des entités de la BD
