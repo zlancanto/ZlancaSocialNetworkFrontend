@@ -1,4 +1,6 @@
-export interface IUserEntity {
+import {ITimestamps} from "../ITimestamps";
+
+export interface IUserEntity extends ITimestamps {
     _id: string;
     pseudo: string;
     email: string;
@@ -9,6 +11,4 @@ export interface IUserEntity {
     followers: Array<string>;
     following: Array<string>;
     likes: Array<string>;
-    createdAt: Date;
-    updatedAt: Date;
 }

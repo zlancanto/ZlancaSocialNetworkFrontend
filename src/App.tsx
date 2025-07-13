@@ -7,6 +7,9 @@ import {getUser} from "./providers/user/get.user";
 import {IUserEntity} from "./structures/entities/IUser.entity";
 import {setUserConnected, setUserList} from "./redux/reducers/user/user.setters";
 import {getUserList} from "./providers/user/get.user.list";
+import {IPostEntity} from "./structures/entities/IPost.entity";
+import {setPostList} from "./redux/reducers/post/post.setters";
+import {getPostList} from "./providers/post/get.post.list";
 
 
 const App: FunctionComponent = () => {
@@ -31,6 +34,13 @@ const App: FunctionComponent = () => {
             userList
                 ? dispatch(setUserList(userList))
                 : dispatch(setUserList([]))
+        })
+
+        /* PostList */
+        getPostList().then((postList: Array<IPostEntity> | undefined) => {
+            postList
+                ? dispatch(setPostList(postList))
+                : dispatch(setPostList([]))
         })
     }, [uid]);
 

@@ -8,9 +8,10 @@ import {unfollowUser} from "../../providers/user/unfollow.user";
 
 interface Props {
     idToFollow: string;
+    type: 'suggestion' | 'card'
 }
 
-const FollowHandler: FunctionComponent<Props> = ({idToFollow}) => {
+const FollowHandler: FunctionComponent<Props> = ({idToFollow, type}) => {
     // States
     const [isFollowed, setIsFollowed] = useState(false);
 
@@ -44,12 +45,20 @@ const FollowHandler: FunctionComponent<Props> = ({idToFollow}) => {
                 isFollowed
                     ? (
                         <span onClick={handleUnFollow}>
-                            <button className="unfollow-btn">Abonné</button>
+                            {
+                                type === 'suggestion' 
+                                    ? <button className="unfollow-btn">Abonné</button>
+                                    : <img src="/img/icons/checked.svg" alt="Checked"/>
+                            }
                         </span>
                     )
                     : (
                         <span onClick={handleFollow}>
-                            <button className="follow-btn">Suivre</button>
+                            {
+                                type === 'suggestion'
+                                    ? <button className="follow-btn">Suivre</button>
+                                    : <img src="/img/icons/check.svg" alt="Check"/>
+                            }
                         </span>
                     )
             }

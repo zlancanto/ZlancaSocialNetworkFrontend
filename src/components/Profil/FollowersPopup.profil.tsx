@@ -31,7 +31,7 @@ const FollowersPopupProfil: FunctionComponent<Props> = ({setFollowersPopup}) => 
                                     <img src={follower.picture} alt="FollowerPicture"/>
                                     <h4>{follower.pseudo}</h4>
                                     <div className="follow-handler">
-                                        <FollowHandler idToFollow={follower._id}/>
+                                        <FollowHandler idToFollow={follower._id} type={'suggestion'}/>
                                     </div>
                                 </li>
                             )))

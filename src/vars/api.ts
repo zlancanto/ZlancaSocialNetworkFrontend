@@ -18,4 +18,10 @@ export const API_USER_UNFOLLOW = `${API_URL}/${user}/unfollow`;
 export const API_USER_UPLOAD_PICTURE = `${API_URL}/${user}/upload`;
 
 /* Post */
+export const API_POST_ALL = `${API_URL}/${post}/`;
+export const API_POST_CREATE = `${API_URL}/${post}/`;
+export const API_POST_UPDATE = `${API_URL}/${post}`;
+export const API_POST_DELETE = `${API_URL}/${post}`;
+export const API_POST_LIKE = `${API_URL}/${post}/likePost`;
+export const API_POST_UNLIKE = `${API_URL}/${post}/unlikePost`;
 
