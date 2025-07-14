@@ -1,21 +1,38 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import {useSelector} from "react-redux";
-import {getPostList} from "../redux/reducers/post/post.getters";
+import {getPosts} from "../redux/reducers/post/post.getters";
 import {IPostEntity} from "../structures/entities/IPost.entity";
-import CardProfil from "./Post/Card.profil";
+import CardPost from "./Post/Card.post";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Thread: FunctionComponent = () => {
+    // States
+    const [count, setCount] = useState(5);
 
     // Selector
-    const postList: Array<IPostEntity> = useSelector(getPostList);
+    const postList: Array<IPostEntity> = useSelector(getPosts(count));
+
+    // Vars
+    const hasMore = postList.length >= count;
+
+    const fetchMore = () => {
+        setCount(prev => prev + 5);
+    };
 
     return (
         <div className="thread-container">
-            <ul>
-                {
-                    postList.map(post => <CardProfil post={post} key={post._id}/>)
-                }
-            </ul>
+            <InfiniteScroll
+                next={fetchMore}
+                hasMore={hasMore}
+                dataLength={postList.length}
+                loader={<h4>Chargement…</h4>}
+            >
+                <ul>
+                    {
+                        postList.map(post => <CardPost post={post} key={post._id}/>)
+                    }
+                </ul>
+            </InfiniteScroll>
         </div>
     );
 };

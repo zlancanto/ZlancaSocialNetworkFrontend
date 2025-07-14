@@ -1,5 +1,7 @@
 import {postSlice} from "./post.slice";
 
 export const {
-    setPostList
+    setPostList,
+    likePost,
+    unlikePost
 } = postSlice.actions

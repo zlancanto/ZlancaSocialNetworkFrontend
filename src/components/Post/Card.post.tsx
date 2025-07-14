@@ -6,12 +6,13 @@ import {getPostList} from "../../redux/reducers/post/post.getters";
 import {IUserEntity} from "../../structures/entities/IUser.entity";
 import {formatLikeDayMonthYearHour} from "../../utils/date";
 import FollowHandler from "../Profil/FollowHandler";
+import LikeButtonPost from "./LikeButton.post";
 
 interface Props {
     post: IPostEntity;
 }
 
-const CardProfil: FunctionComponent<Props> = ({post}) => {
+const CardPost: FunctionComponent<Props> = ({post}) => {
     // States
     const [isLoading, setIsLoading] = useState(true);
     const [posterUser, setPosterUser] = useState<IUserEntity>()
@@ -66,14 +67,7 @@ const CardProfil: FunctionComponent<Props> = ({post}) => {
                                                         height={300}
                                                         src={post.video}
                                                         frameBorder={0}
-                                                        allow="
-                                                        acceleromter;
-                                                        autoplay;
-                                                        clipboard-write;
-                                                        encrypted-media;
-                                                        gyroscope;
-                                                        picture-in-picture
-                                                        "
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                         allowFullScreen={true}
                                                     ></iframe>
                                                 )
@@ -83,7 +77,7 @@ const CardProfil: FunctionComponent<Props> = ({post}) => {
                                                     <img src="/img/icons/message1.svg" alt="Comment"/>
                                                     <span>{post.comments.length}</span>
                                                 </div>
-                                                <h6>Like Button</h6>
+                                                <LikeButtonPost post={post}/>
                                                 <img src="/img/icons/share.svg" alt="Share"/>
                                             </div>
                                         </div>
@@ -98,4 +92,4 @@ const CardProfil: FunctionComponent<Props> = ({post}) => {
     );
 };
 
-export default CardProfil;
+export default CardPost;
