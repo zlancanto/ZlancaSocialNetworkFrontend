@@ -1,12 +1,14 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {IPostEntity} from "../../structures/entities/IPost.entity";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getUserConnected, getUserList} from "../../redux/reducers/user/user.getters";
-import {getPostList} from "../../redux/reducers/post/post.getters";
 import {IUserEntity} from "../../structures/entities/IUser.entity";
 import {formatLikeDayMonthYearHour} from "../../utils/date";
 import FollowHandler from "../Profil/FollowHandler";
 import LikeButtonPost from "./LikeButton.post";
+import {updatePost as updatePostApi} from "../../providers/post/update.post";
+import {updatePost} from "../../redux/reducers/post/post.setters";
+import DeletePost from "./Delete.post";
 
 interface Props {
     post: IPostEntity;
@@ -15,18 +17,35 @@ interface Props {
 const CardPost: FunctionComponent<Props> = ({post}) => {
     // States
     const [isLoading, setIsLoading] = useState(true);
-    const [posterUser, setPosterUser] = useState<IUserEntity>()
+    const [isUpdated, setIsUpdated] = useState(false);
+    const [textUpdate, setTextUpdate] = useState<string>();
+    const [posterUser, setPosterUser] = useState<IUserEntity>();
 
-    // Selectors
-    const userConnected = useSelector(getUserConnected);
+    // Selectors and Dispatch
+    const userConnected = useSelector(getUserConnected)!;
     const userList = useSelector(getUserList);
-    //const postList = useSelector(getPostList);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (userList) { setIsLoading(false) }
+        if (userList) {
+            setIsLoading(false)
+        }
         const posterList = userList.filter(user => user._id === post.posterId);
         setPosterUser(posterList[0]);
     }, [userList]);
+
+    const handlerUpdatePost = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (textUpdate) {
+            updatePostApi(post._id, textUpdate)
+                .then(postUpdated => {
+                    if (postUpdated) {
+                        dispatch(updatePost(postUpdated));
+                    }
+                })
+                .finally(() => setIsUpdated(false))
+        }
+    };
 
     return (
         <li className="card-container" key={post._id}>
@@ -53,7 +72,28 @@ const CardPost: FunctionComponent<Props> = ({post}) => {
                                                 </div>
                                                 <span>{formatLikeDayMonthYearHour(post.createdAt)}</span>
                                             </div>
-                                            <p>{post.message}</p>
+
+                                            {
+                                                isUpdated
+                                                    ? (
+                                                        <div className="update-post">
+                                                            <textarea
+                                                                defaultValue={post.message}
+                                                                onChange={e => setTextUpdate(e.currentTarget.value)}
+                                                            />
+                                                            <div className="button-container">
+                                                                <button
+                                                                    className="btn"
+                                                                    onClick={handlerUpdatePost}
+                                                                >
+                                                                    Valider
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                    : <p>{post.message}</p>
+                                            }
+
                                             {
                                                 /* Picture */
                                                 post.picture && <img src={post.picture} alt="PostPicture" className="card-pic"/>
@@ -72,6 +112,21 @@ const CardPost: FunctionComponent<Props> = ({post}) => {
                                                     ></iframe>
                                                 )
                                             }
+
+                                            {
+                                                (userConnected._id === post.posterId) && (
+                                                    <div className="button-container">
+                                                        {/* Update */}
+                                                        <div onClick={() => setIsUpdated(!isUpdated)}>
+                                                            <img src="/img/icons/edit.svg" alt="EditPostIcon"/>
+                                                        </div>
+
+                                                        {/* Delete */}
+                                                        <DeletePost postId={post._id}/>
+                                                    </div>
+                                                )
+                                            }
+
                                             <div className="card-footer">
                                                 <div className="comment-icon">
                                                     <img src="/img/icons/message1.svg" alt="Comment"/>

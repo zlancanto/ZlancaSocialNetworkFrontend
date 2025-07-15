@@ -32,3 +32,15 @@ export const unlikePost = (currentState: IPostState, action: PayloadAction<{ pos
         currentState.postList[postIndexToUnliked] = updatedPost;
     }
 };
+
+export const updatePost = (currentState: IPostState, action: PayloadAction<IPostEntity>) =>{
+    const indexPostToUpdate: number = currentState.postList.findIndex((post: IPostEntity) => post._id === action.payload._id);
+    if (indexPostToUpdate !== -1) {
+        currentState.postList[indexPostToUpdate] = action.payload;
+    }
+};
+
+/* action.payload = PostId  */
+export const deletePost = (currentState: IPostState, action: PayloadAction<string>) => {
+    currentState.postList = currentState.postList.filter((post: IPostEntity) => post._id !== action.payload)
+}
