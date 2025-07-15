@@ -44,3 +44,9 @@ export const updatePost = (currentState: IPostState, action: PayloadAction<IPost
 export const deletePost = (currentState: IPostState, action: PayloadAction<string>) => {
     currentState.postList = currentState.postList.filter((post: IPostEntity) => post._id !== action.payload)
 }
+
+export const setPost = (currentState: IPostState, action: PayloadAction<IPostEntity>) => {
+    const postIndex = currentState.postList.findIndex((post: IPostEntity) => post._id === action.payload._id);
+    if (postIndex === -1) { return; }
+    currentState.postList[postIndex] = action.payload;
+}

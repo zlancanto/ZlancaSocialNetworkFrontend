@@ -25,3 +25,10 @@ export const API_POST_DELETE = `${API_URL}/${post}`;
 export const API_POST_LIKE = `${API_URL}/${post}/likePost`;
 export const API_POST_UNLIKE = `${API_URL}/${post}/unlikePost`;
 
+/* Comment */
+export const API_COMMENT_CREATE = `${API_URL}/${post}/commentPost`;
+export const API_COMMENT_EDIT = `${API_URL}/${post}/editCommentPost`;
+export const API_COMMENT_DELETE = `${API_URL}/${post}/deleteCommentPost`;
+
+
+

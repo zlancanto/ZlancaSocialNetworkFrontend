@@ -9,6 +9,7 @@ import LikeButtonPost from "./LikeButton.post";
 import {updatePost as updatePostApi} from "../../providers/post/update.post";
 import {updatePost} from "../../redux/reducers/post/post.setters";
 import DeletePost from "./Delete.post";
+import CommentPost from "./Comment/Comment.post";
 
 interface Props {
     post: IPostEntity;
@@ -18,11 +19,12 @@ const CardPost: FunctionComponent<Props> = ({post}) => {
     // States
     const [isLoading, setIsLoading] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
+    const [showCommentList, setShwoCommentList] = useState(false);
     const [textUpdate, setTextUpdate] = useState<string>();
     const [posterUser, setPosterUser] = useState<IUserEntity>();
 
     // Selectors and Dispatch
-    const userConnected = useSelector(getUserConnected)!;
+    const userConnected = useSelector(getUserConnected);
     const userList = useSelector(getUserList);
     const dispatch = useDispatch();
 
@@ -65,8 +67,7 @@ const CardPost: FunctionComponent<Props> = ({post}) => {
                                                 <div className="pseudo">
                                                     <h3>{posterUser.pseudo}</h3>
                                                     {
-                                                        userConnected
-                                                        && userConnected._id !== post.posterId
+                                                        userConnected?._id !== post.posterId
                                                         && <FollowHandler idToFollow={post.posterId} type={'card'}/>
                                                     }
                                                 </div>
@@ -114,7 +115,7 @@ const CardPost: FunctionComponent<Props> = ({post}) => {
                                             }
 
                                             {
-                                                (userConnected._id === post.posterId) && (
+                                                (userConnected?._id === post.posterId) && (
                                                     <div className="button-container">
                                                         {/* Update */}
                                                         <div onClick={() => setIsUpdated(!isUpdated)}>
@@ -129,12 +130,21 @@ const CardPost: FunctionComponent<Props> = ({post}) => {
 
                                             <div className="card-footer">
                                                 <div className="comment-icon">
-                                                    <img src="/img/icons/message1.svg" alt="Comment"/>
+                                                    <img
+                                                        src="/img/icons/message1.svg"
+                                                        alt="Comment"
+                                                        onClick={() => setShwoCommentList(!showCommentList)}
+                                                    />
                                                     <span>{post.comments.length}</span>
                                                 </div>
                                                 <LikeButtonPost post={post}/>
                                                 <img src="/img/icons/share.svg" alt="Share"/>
                                             </div>
+
+                                            {
+                                                /* Comments */
+                                                showCommentList && <CommentPost post={post}/>
+                                            }
                                         </div>
                                     </>
                                 )

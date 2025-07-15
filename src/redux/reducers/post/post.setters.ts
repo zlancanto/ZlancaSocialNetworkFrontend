@@ -2,8 +2,9 @@ import {postSlice} from "./post.slice";
 
 export const {
     setPostList,
+    setPost,
     likePost,
     unlikePost,
     updatePost,
-    deletePost
+    deletePost,
 } = postSlice.actions

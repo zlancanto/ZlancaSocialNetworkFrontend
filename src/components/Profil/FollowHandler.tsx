@@ -16,23 +16,25 @@ const FollowHandler: FunctionComponent<Props> = ({idToFollow, type}) => {
     const [isFollowed, setIsFollowed] = useState(false);
 
     // Selector
-    const userConnected = useSelector(getUserConnected)!;
+    const userConnected = useSelector(getUserConnected);
     const dispatch = useDispatch();
 
     const handleFollow = (e: React.MouseEvent<HTMLSpanElement>) => {
         e.preventDefault();
+        if (!userConnected) { return; }
         followUser(userConnected._id, idToFollow).then((user: IUserEntity) => dispatch(setUserConnected(user)))
         setIsFollowed(true);
     };
 
     const handleUnFollow = (e: React.MouseEvent<HTMLSpanElement>) => {
         e.preventDefault();
+        if (!userConnected) { return; }
         unfollowUser(userConnected._id, idToFollow).then((user: IUserEntity) => dispatch(setUserConnected(user)))
         setIsFollowed(false);
     };
 
     useEffect(() => {
-        if (userConnected.following.includes(idToFollow)) {
+        if (userConnected?.following.includes(idToFollow)) {
             setIsFollowed(true);
         } else {
             setIsFollowed(false);

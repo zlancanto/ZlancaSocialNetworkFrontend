@@ -10,11 +10,12 @@ import {getUserList} from "./providers/user/get.user.list";
 import {IPostEntity} from "./structures/entities/IPost.entity";
 import {setPostList} from "./redux/reducers/post/post.setters";
 import {getPostList} from "./providers/post/get.post.list";
+import {ToastContainer} from "react-toastify";
 
 
 const App: FunctionComponent = () => {
-  const [uid, setUid] = useState<string | null>(null);
-  const dispatch = useDispatch();
+    const [uid, setUid] = useState<string | null>(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetchToken(setUid);
@@ -44,11 +45,23 @@ const App: FunctionComponent = () => {
         })
     }, [uid]);
 
-  return (
-      <UidContext.Provider value={uid}>
-        <Routes/>
-      </UidContext.Provider>
-  )
+    return (
+        <UidContext.Provider value={uid}>
+            <Routes/>
+            <ToastContainer
+                position="top-right"
+                autoClose={7000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+        </UidContext.Provider>
+    )
 }
 
 export default App;
