@@ -1,9 +1,12 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getUserConnected} from "../../redux/reducers/user/user.getters";
 import {NavLink} from "react-router-dom";
 import {ROUTE_PROFIL} from "../../vars/routes";
 import {formatLikeDayMonthYearHour} from "../../utils/date";
+import {createPost} from "../../providers/post/create.post";
+import {IPostEntity} from "../../structures/entities/IPost.entity";
+import {addPost} from "../../redux/reducers/post/post.setters";
 
 const CreatePost: FunctionComponent = () => {
     // States
@@ -14,25 +17,89 @@ const CreatePost: FunctionComponent = () => {
     const [file, setFile] = useState<File>();
 
     // Dispatch and Selector
+    const dispatch = useDispatch();
     const userConnected = useSelector(getUserConnected);
 
     useEffect(() => {
         if (userConnected) {
             setIsLoading(false);
         }
-    }, []);
+        handleVideo();
+    }, [userConnected, message, video]);
 
-    const handlePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
+    useEffect(() => {
+        return () => {
+            if (postPicture) {
+                URL.revokeObjectURL(postPicture);
+            }
+        };
+    }, [postPicture]);
 
+    const handleVideo = () => {
+        if (!message) {
+            return;
+        }
+        let findLink = message.split(' ');
+        findLink.forEach((str: string, index: number) => {
+            if (!(
+                str.includes('https://www.youtube.com/') ||
+                str.includes('https://youtube.com/')
+            )) {
+                return;
+            }
+            let embed = str.replace('watch?v=', 'embed/');
+            setVideo(embed.split('&')[0]);
+            findLink.splice(index, 1);
+            setMessage(findLink.join(' '));
+            setPostPicture('');
+        })
     }
 
-    const handlePost = (e: React.MouseEvent<HTMLButtonElement>) => {}
+    const handlePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.currentTarget.files) {
+            const file: File = e.currentTarget.files[0];
+            setPostPicture(URL.createObjectURL(file))
+            setFile(file);
+            setVideo('');
+        }
+    }
 
     const cancelPost = () => {
         setMessage('');
         setPostPicture(undefined);
         setVideo(undefined);
         setFile(undefined);
+    }
+
+    const handlePost = () => {
+        if (!userConnected) {
+            return;
+        }
+        if (message || postPicture || video) {
+            const data = new FormData();
+            data.append('posterId', userConnected._id);
+            data.append('message', message || '');
+
+            if (file) {
+                data.append('file', file);
+            }
+            if (video) {
+                data.append('video', video);
+            }
+
+            createPost(data).then((post: IPostEntity | undefined) => {
+                if (post) {
+                    console.log('POST : ', post);
+                    dispatch(addPost(post));
+                    setMessage(undefined);
+                    setPostPicture(undefined);
+                    setVideo(undefined);
+                    setFile(undefined);
+                }
+            })
+        } else {
+            alert("Aucune donnée. Impossible d'effectuer le post");
+        }
     }
 
     return (
@@ -96,7 +163,7 @@ const CreatePost: FunctionComponent = () => {
                                                 </div>
                                                 <div className="content">
                                                     <p>{message}</p>
-                                                    { postPicture && <img src={postPicture} /> }
+                                                    {postPicture && <img src={postPicture}/>}
 
                                                     {
                                                         /* Vidéo */

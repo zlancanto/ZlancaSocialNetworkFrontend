@@ -6,6 +6,10 @@ export const setPostList = (currentState: IPostState, action: PayloadAction<Arra
     currentState.postList = action.payload;
 };
 
+export const addPost = (currentState: IPostState, action: PayloadAction<IPostEntity>)=> {
+    currentState.postList = [action.payload, ...currentState.postList];
+}
+
 /* action.payload = PostId  */
 export const likePost = (currentState: IPostState, action: PayloadAction<{ postId: string, likerId: string }>)=> {
     const postIndexToLiked: number = currentState.postList.findIndex((post: IPostEntity) => post._id === action.payload.postId);
