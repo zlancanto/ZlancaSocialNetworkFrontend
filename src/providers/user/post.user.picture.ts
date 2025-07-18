@@ -9,5 +9,6 @@ export const postUserPicture = async (data: FormData) => {
     }
     catch (err) {
         console.error('Upload picture error : ', err);
+        throw err;
     }
 }

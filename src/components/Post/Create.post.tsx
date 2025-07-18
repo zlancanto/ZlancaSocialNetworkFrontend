@@ -7,6 +7,10 @@ import {formatLikeDayMonthYearHour} from "../../utils/date";
 import {createPost} from "../../providers/post/create.post";
 import {IPostEntity} from "../../structures/entities/IPost.entity";
 import {addPost} from "../../redux/reducers/post/post.setters";
+import {toast} from "react-toastify";
+import {addUploadFileError, resetUploadFileError} from "../../redux/reducers/error/error.setters";
+import {IUploadFileError} from "../../structures/errors/IUploadFileError";
+import {getUploadFileError} from "../../redux/reducers/error/error.getters";
 
 const CreatePost: FunctionComponent = () => {
     // States
@@ -19,6 +23,7 @@ const CreatePost: FunctionComponent = () => {
     // Dispatch and Selector
     const dispatch = useDispatch();
     const userConnected = useSelector(getUserConnected);
+    const errors: IUploadFileError = useSelector(getUploadFileError)
 
     useEffect(() => {
         if (userConnected) {
@@ -87,18 +92,25 @@ const CreatePost: FunctionComponent = () => {
                 data.append('video', video);
             }
 
-            createPost(data).then((post: IPostEntity | undefined) => {
-                if (post) {
-                    console.log('POST : ', post);
-                    dispatch(addPost(post));
-                    setMessage(undefined);
-                    setPostPicture(undefined);
-                    setVideo(undefined);
-                    setFile(undefined);
-                }
-            })
+            createPost(data)
+                .then((post: IPostEntity | undefined) => {
+                    if (post) {
+                        console.log('POST : ', post);
+                        dispatch(addPost(post));
+                        dispatch((resetUploadFileError()));
+                        setMessage('');
+                        setPostPicture(undefined);
+                        setVideo(undefined);
+                        setFile(undefined);
+                        toast.success('Post ajouté');
+                    }
+                })
+                .catch((err: any) => {
+                    dispatch(addUploadFileError(err.response.data.errors));
+                    console.error('CreatePostError : ', err);
+                })
         } else {
-            alert("Aucune donnée. Impossible d'effectuer le post");
+            toast.warning("Aucune donnée. Impossible d'effectuer le post");
         }
     }
 
@@ -205,6 +217,12 @@ const CreatePost: FunctionComponent = () => {
                                                 )
                                         }
                                     </div>
+                                    { errors.notFile !== '' && <p>{errors.notFile}</p> }
+                                    { errors.invalidFile !== '' && <p>{errors.invalidFile}</p> }
+                                    { errors.user !== '' && <p>{errors.user}</p> }
+                                    { errors.maxSizeFile !== '' && <p>{errors.maxSizeFile}</p> }
+                                    { errors.other !== '' && <p>{errors.other}</p> }
+
                                     <div className="btn-send">
                                         {
                                             /* Cancel */

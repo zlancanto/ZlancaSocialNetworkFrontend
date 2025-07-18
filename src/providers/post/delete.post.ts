@@ -14,5 +14,6 @@ export const deletePost = async (postId: string) => {
     }
     catch (err) {
         console.error('DeletePostError : ', err);
+        throw err;
     }
 }

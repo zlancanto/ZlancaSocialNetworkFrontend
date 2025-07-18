@@ -14,5 +14,6 @@ export const getPostList = async () => {
     }
     catch (err) {
         console.error('GetPostListError : ', err);
+        throw err;
     }
 };

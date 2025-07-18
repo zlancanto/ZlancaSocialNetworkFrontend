@@ -9,6 +9,8 @@ import {setUserConnected} from "../../redux/reducers/user/user.setters";
 import {formatLikeDayMonthYearHour} from "../../utils/date";
 import FollowingPopupProfil from "./FollowingPopup.profil";
 import FollowersPopupProfil from "./FollowersPopup.profil";
+import {getUploadFileError} from "../../redux/reducers/error/error.getters";
+import {IUploadFileError} from "../../structures/errors/IUploadFileError";
 
 const UpdateProfil: FunctionComponent = () => {
     // States
@@ -19,6 +21,7 @@ const UpdateProfil: FunctionComponent = () => {
 
     // Selector and Dispatch
     const userConnected: IUserEntity | undefined = useSelector(getUserConnected);
+    const errors: IUploadFileError = useSelector(getUploadFileError);
     const dispatch = useDispatch();
 
     const onUpdateBio = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -55,6 +58,9 @@ const UpdateProfil: FunctionComponent = () => {
                                     <h3>Photo de profil</h3>
                                     <img src={`${userConnected.picture}?v=${userConnected.updatedAt}`} alt="UserPicture"/>
                                     <UploadImgProfil/>
+                                    { errors.maxSizeFile.length > 0 && <p>{errors.maxSizeFile}</p> }
+                                    { errors.invalidFile.length > 0 && <p>{errors.invalidFile}</p> }
+                                    { errors.other.length > 0 && <p>{errors.other}</p> }
                                 </div>
 
                                 {/* Right */}

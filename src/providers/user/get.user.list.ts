@@ -14,5 +14,6 @@ export const getUserList = async () => {
     }
     catch (err) {
         console.error('GetUserListError : ', err);
+        throw err;
     }
 };

@@ -14,6 +14,7 @@ export const updateUser = async (user: IUserEntity) => {
         return res.data;
     }
     catch (err) {
-        console.error('Update User error : ', err);
+        console.error('UpdateUserError : ', err);
+        throw err;
     }
 };

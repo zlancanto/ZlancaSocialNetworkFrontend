@@ -4,6 +4,8 @@ import {getUserConnected} from "../../redux/reducers/user/user.getters";
 import {postUserPicture} from "../../providers/user/post.user.picture";
 import {setUserConnected} from "../../redux/reducers/user/user.setters";
 import {IUserEntity} from "../../structures/entities/IUser.entity";
+import {addUploadFileError, resetUploadFileError} from "../../redux/reducers/error/error.setters";
+import any = jasmine.any;
 
 const UploadImgProfil: FunctionComponent = () => {
     const [file, setFile] = useState<File>();
@@ -27,7 +29,15 @@ const UploadImgProfil: FunctionComponent = () => {
             const data = new FormData()
             data.append('userId', userConnected._id);
             data.append('file', file);
-            postUserPicture(data).then((user: IUserEntity | undefined) => dispatch(setUserConnected(user)))
+            postUserPicture(data)
+                .then((user: IUserEntity | undefined) => {
+                    dispatch(setUserConnected(user));
+                    dispatch(resetUploadFileError());
+                })
+                .catch((err : any) => {
+                    dispatch(addUploadFileError(err.response.data.errors));
+                    console.error('UpdateProfilError : ', err);
+                });
         }
     };
 

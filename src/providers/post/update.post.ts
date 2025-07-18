@@ -15,5 +15,6 @@ export const updatePost = async (postId: string, message: string) => {
     }
     catch (err) {
         console.error('UpdatePostError : ', err);
+        throw err;
     }
 };

@@ -3,7 +3,7 @@ import {API_USER_REGISTER} from "../../vars/api";
 import {NavLink} from "react-router-dom";
 import axios from "axios";
 import {IRegister} from "../../structures/IRegister";
-import {IPasswordError} from "../../structures/IPasswordError";
+import {IPasswordError} from "../../structures/errors/IPasswordError";
 import SignInForm from "./SignInForm";
 
 const SignUpForm: FunctionComponent = () => {

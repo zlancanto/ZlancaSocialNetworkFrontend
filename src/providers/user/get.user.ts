@@ -13,6 +13,7 @@ export const getUser = async (uid: string) => {
         return res.data
     }
     catch (err) {
-        console.error(err)
+        console.error('GetUserError : ', err);
+        throw err;
     }
 }

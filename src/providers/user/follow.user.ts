@@ -16,5 +16,6 @@ export const followUser = async (userIdWantFollow: string, userIdToFollow: strin
     }
     catch (err) {
         console.error('FollowUserError : ', err);
+        throw err;
     }
 }

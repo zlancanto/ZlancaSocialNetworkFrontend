@@ -16,5 +16,6 @@ export const unfollowUser = async (userIdWantUnfollow: string, userIdToUnfollow:
     }
     catch (err) {
         console.error('UnfollowUserError : ', err);
+        throw err;
     }
 }
