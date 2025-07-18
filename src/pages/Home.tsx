@@ -6,6 +6,7 @@ import {getUserConnected} from "../redux/reducers/user/user.getters";
 import CreatePost from "../components/Post/Create.post";
 import Log from "../components/Log";
 import {IUserEntity} from "../structures/entities/IUser.entity";
+import Trends from "../components/Trends";
 
 const Home: FunctionComponent = () => {
     // States
@@ -23,6 +24,13 @@ const Home: FunctionComponent = () => {
                     }
                 </div>
                 <Thread/>
+            </div>
+            <div className="right-side">
+                <div className="right-side-container">
+                    <div className="wrapper">
+                        <Trends/>
+                    </div>
+                </div>
             </div>
         </div>
     );

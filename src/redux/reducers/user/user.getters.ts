@@ -5,8 +5,8 @@ export const getUserConnected = (state: RootState): IUserEntity | undefined => s
 
 export const getUserList = (state: RootState): Array<IUserEntity> => state.user.userList
 
-/*
-* export const getUserById =
+export const getUserById =
     (userId: string) => (state: RootState) =>
-        getUserList(state).find((user: IUserEntity) => user._id === userId)
-* */
+        getUserList(state).find((user: IUserEntity) => user._id === userId);
+
+export const getUserImgById = (userId: string) => (state: RootState) => getUserById(userId)(state)?.picture;
