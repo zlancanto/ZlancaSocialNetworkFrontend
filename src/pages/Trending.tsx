@@ -6,6 +6,7 @@ import LeftNav from "../components/LeftNav";
 import {IPostEntity} from "../structures/entities/IPost.entity";
 import CardPost from "../components/Post/Card.post";
 import Trends from "../components/Trends";
+import FriendsHint from "../components/Profil/FriendsHint";
 
 const Trending: FunctionComponent = () => {
     // Selectors
@@ -25,7 +26,7 @@ const Trending: FunctionComponent = () => {
                 </div>
                 <div className="right-side">
                     <div className="right-side-container">
-                        <h1>Tendances</h1>
+                        { userConnected && <FriendsHint/> }
                     </div>
                 </div>
             </div>
