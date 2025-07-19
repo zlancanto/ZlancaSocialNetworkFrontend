@@ -27,11 +27,17 @@ const Thread: FunctionComponent = () => {
                 dataLength={postList.length}
                 loader={<h4>Chargement…</h4>}
             >
-                <ul>
-                    {
-                        postList.map(post => <CardPost post={post} key={post._id}/>)
-                    }
-                </ul>
+                {
+                    (postList.length > 0)
+                        ? (
+                            <ul>
+                                {
+                                    postList.map(post => <CardPost post={post} key={post._id}/>)
+                                }
+                            </ul>
+                        )
+                        : <h2>Aucun post publié</h2>
+                }
             </InfiniteScroll>
         </div>
     );

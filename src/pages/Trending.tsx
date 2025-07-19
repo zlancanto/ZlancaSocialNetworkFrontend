@@ -19,7 +19,7 @@ const Trending: FunctionComponent = () => {
                 <LeftNav/>
                 <div className="main">
                     {
-                        (userConnected && trendList.length > 0) && trendList.map((post: IPostEntity) => (
+                        (trendList.length > 0) && trendList.map((post: IPostEntity) => (
                             <CardPost post={post} key={post._id}/>
                         ))
                     }

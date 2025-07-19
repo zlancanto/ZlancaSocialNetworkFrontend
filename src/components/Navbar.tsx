@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useContext} from 'react';
-import {NavLink} from "react-router-dom";
-import {ROUTE_HOME, ROUTE_PROFIL} from "../vars/routes";
+import {NavLink, useLocation} from "react-router-dom";
+import {ROUTE_HOME, ROUTE_PROFIL, ROUTE_TRENDING} from "../vars/routes";
 import {UidContext} from "./AppContext";
 import Logout from "./Log/Logout";
 import {IUserEntity} from "../structures/entities/IUser.entity";
@@ -9,7 +9,21 @@ import {getUserConnected} from "../redux/reducers/user/user.getters";
 
 const Navbar: FunctionComponent = () => {
     const uid: string | null = useContext(UidContext);
-    const userConnected: IUserEntity | undefined = useSelector(getUserConnected)
+    const userConnected: IUserEntity | undefined = useSelector(getUserConnected);
+    const location = useLocation();
+
+    const getNamePage = () => {
+        switch (location.pathname) {
+            case ROUTE_HOME:
+                return "Page d'accueil";
+            case ROUTE_PROFIL:
+                return 'Votre profil';
+            case ROUTE_TRENDING:
+                return 'Les tendances du moment';
+            default:
+                return '';
+        }
+    }
 
     return (
         <nav>
@@ -18,10 +32,11 @@ const Navbar: FunctionComponent = () => {
                     <NavLink to={ROUTE_HOME}>
                         <div className="logo">
                             <img src="/img/icon.png" alt="Log du site"/>
-                            <h3>Zlanca</h3>
+                            <h3>Mymoz</h3>
                         </div>
                     </NavLink>
                 </div>
+                <h3>{getNamePage()}</h3>
                 {
                     uid ? (
                             <ul>
@@ -39,7 +54,7 @@ const Navbar: FunctionComponent = () => {
                                 <li></li>
                                 <li>
                                     <NavLink to={ROUTE_PROFIL}>
-                                        <img src="/img/icons/login.svg" alt="Logo login"/>
+                                        <img src="/img/icons/login.svg" alt="LoginLogo"/>
                                     </NavLink>
                                 </li>
                             </ul>

@@ -39,6 +39,7 @@ const SignInForm: FunctionComponent = () => {
             if (!response.data) {
                 setConnectionError('Email ou mot de passe incorrect');
             }else {
+                window.location.reload();
                 navigate(ROUTE_HOME);
             }
         }

@@ -156,6 +156,7 @@ const CreatePost: FunctionComponent = () => {
                                     id="message"
                                     placeholder="Quoi de neuf ?"
                                     value={message}
+                                    required
                                     onChange={e => setMessage(e.currentTarget.value)}
                                 />
 

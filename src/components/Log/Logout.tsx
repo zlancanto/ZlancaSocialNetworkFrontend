@@ -25,6 +25,7 @@ const Logout: FunctionComponent = () => {
             });
             removeCookie('jwt')
             console.log('res', res);
+            window.location.reload();
             navigate(ROUTE_HOME);
         }
         catch (err) {

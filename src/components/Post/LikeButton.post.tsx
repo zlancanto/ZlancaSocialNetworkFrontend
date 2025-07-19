@@ -60,21 +60,21 @@ const LikeButtonPost: FunctionComponent<Props> = ({post}) => {
     return (
         <div className="like-container">
             {
-                !userConnected && (
-                    <Popup trigger={<img src="/img/icons/heart.svg" alt="Like"/>}
-                           position={['bottom center', 'bottom right', 'bottom left']}
-                           closeOnDocumentClick={true}
+                userConnected ? (
+                    liked
+                        ? <img src="/img/icons/heart-filled.svg" alt="Unlike" onClick={unlikeHandler}/>
+                        : <img src="/img/icons/heart.svg" alt="Like" onClick={likeHandler}/>
+                ) : (
+                    <Popup
+                        trigger={<img src="/img/icons/heart.svg" alt="Like"/>}
+                        position={['left center']}
+                        closeOnDocumentClick={true}
                     >
                         Connectez-vous pour liker un post
                     </Popup>
                 )
             }
 
-            {
-                (userConnected && liked)
-                    ? <img src="/img/icons/heart-filled.svg" alt="Unlike" onClick={unlikeHandler}/>
-                    : <img src="/img/icons/heart.svg" alt="Like" onClick={likeHandler}/>
-            }
             <span>{post.likers.length}</span>
         </div>
     );

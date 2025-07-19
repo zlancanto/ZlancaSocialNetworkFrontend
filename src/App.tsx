@@ -18,17 +18,8 @@ const App: FunctionComponent = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // 1. Appel initial pour récupérer le token
         fetchToken(setUid);
-
-        /* UserConnected */
-        if (uid) {
-            getUser(uid)
-                .then((user: IUserEntity | undefined) => {
-                    dispatch(setUserConnected(user));
-                    console.log('user', user);
-                })
-                .catch(err => console.error(err));
-        }
 
         /* UserList */
         getUserList().then((userList) => {
@@ -43,6 +34,19 @@ const App: FunctionComponent = () => {
                 ? dispatch(setPostList(postList))
                 : dispatch(setPostList([]))
         })
+    }, []);
+
+    useEffect(() => {
+        /* UserConnected */
+        console.log("UID changé :", uid);
+        if (uid) {
+            getUser(uid)
+                .then((user: IUserEntity | undefined) => {
+                    dispatch(setUserConnected(user));
+                    console.log('user', user);
+                })
+                .catch(err => console.error(err));
+        }
     }, [uid]);
 
     return (
