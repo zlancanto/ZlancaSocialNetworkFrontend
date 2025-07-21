@@ -52,37 +52,39 @@ const FriendsHint: FunctionComponent = () => {
     }
 
     return (
-        <div className="get-friends-container">
+        <>
             {
                 friendListHint.length > 0 && (
-                    <>
-                        <h4>Suggestions</h4>
-                        {
-                            isLoading
-                                ? (
-                                    <div className="icon">
-                                        <i className="fas fa-spinner fa-pulse"></i>
-                                    </div>
-                                )
-                                : (
-                                    <ul>
-                                        {
-                                            friendListHint.map((user: IUserEntity) => (
-                                                <li className="user-hint">
-                                                    <img src={user.picture} alt="UserImage"/>
-                                                    <p>{user.pseudo}</p>
-                                                    <FollowHandler idToFollow={user._id} type={'suggestion'}/>
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                )
-                        }
-                    </>
+                    <div className="get-friends-container">
+
+                        <>
+                            <h4>Suggestions</h4>
+                            {
+                                isLoading
+                                    ? (
+                                        <div className="icon">
+                                            <i className="fas fa-spinner fa-pulse"></i>
+                                        </div>
+                                    )
+                                    : (
+                                        <ul>
+                                            {
+                                                friendListHint.map((user: IUserEntity) => (
+                                                    <li className="user-hint">
+                                                        <img src={user.picture} alt="UserImage"/>
+                                                        <p>{user.pseudo}</p>
+                                                        <FollowHandler idToFollow={user._id} type={'suggestion'}/>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    )
+                            }
+                        </>
+                    </div>
                 )
             }
-
-        </div>
+        </>
     );
 };
 

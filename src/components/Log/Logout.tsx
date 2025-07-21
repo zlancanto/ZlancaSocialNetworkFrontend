@@ -9,11 +9,11 @@ const Logout: FunctionComponent = () => {
 
     const navigate = useNavigate();
 
-    const removeCookie = (key: string) => {
+    /*const removeCookie = (key: string) => {
         if (typeof window !== 'undefined') {
             cookie.remove(key, { expires: 1 });
         }
-    };
+    };*/
 
     const onLogout = async (e: React.MouseEvent<HTMLLIElement>) => {
         e.preventDefault();
@@ -23,10 +23,10 @@ const Logout: FunctionComponent = () => {
                 url: API_USER_LOGOUT,
                 withCredentials: true
             });
-            removeCookie('jwt')
+            //removeCookie('jwt')
             console.log('res', res);
-            window.location.reload();
             navigate(ROUTE_HOME);
+            window.location.reload();
         }
         catch (err) {
             console.error('err : ', err);
