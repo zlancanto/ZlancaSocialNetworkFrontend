@@ -50,14 +50,14 @@ const CardPost: FunctionComponent<Props> = ({post}) => {
     };
 
     return (
-        <li className="card-container" key={post._id}>
+        <>
             {
-                isLoading
-                    ? (<i className="fas fa-spinner fa-spin"></i>)
-                    : (
-                        <>
-                            {
-                                posterUser && (
+                posterUser && (
+                    <li className="card-container" key={post._id}>
+                        {
+                            isLoading
+                                ? (<i className="fas fa-spinner fa-spin"></i>)
+                                : (
                                     <>
                                         <div className="card-left">
                                             <img src={posterUser.picture} alt="PosterImg"/>
@@ -147,13 +147,13 @@ const CardPost: FunctionComponent<Props> = ({post}) => {
                                             }
                                         </div>
                                     </>
-                                )
-                            }
 
-                        </>
-                    )
+                                )
+                        }
+                    </li>
+                )
             }
-        </li>
+        </>
     );
 };
 
